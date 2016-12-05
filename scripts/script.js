@@ -3,6 +3,10 @@
 
 var classmateArray = [];
 
+var timerID = -1;
+
+var TIMER_DURATION = 10000;  // in milliseconds
+
 function Classmate(first_name, last_name, picUrl, info) {
   // Classmate constructor function.
   this.first_name = first_name;
@@ -13,6 +17,7 @@ function Classmate(first_name, last_name, picUrl, info) {
 
 $(document).ready(function(){
   $.ajax({
+    // Gets cohort data.
     url: 'http://devjana.net/support/tau_students.json',
     dataType: 'JSON',
     success: function(data){
@@ -21,20 +26,38 @@ $(document).ready(function(){
       }
       buildNav();
       buildFrames();
-      var startIndex = randomIndex();
+      var startIndex = 0;
       $('#classmate' + startIndex).fadeIn();
       buttonHighlight(startIndex);
+      resetInterval();
     },
     error: function(){
       alert('Unable to access JSON data. Please make sure that CORS is enabled. Reload page to try again.');
     }
   });
-
 });
 
 $(document).on('click', 'nav > button', function() {
-  var targetIndex;
+  /* Navigation button handler. One of two ways frame change happens. */
   var buttonName = $(this).attr('name');
+  triggerTarget(buttonName);
+  resetInterval();
+});
+
+function resetInterval() {
+  clearInterval(timerID);
+  timerID = setInterval(function(){
+    triggerTarget("next");
+  }, TIMER_DURATION);
+}
+
+var triggerTarget = function(buttonName) {
+  /* If the user clicks the "Prev" or "Next" button, or 10-second timer
+  triggers, function goes through some logic to make sure viewer wraps to the
+  correct target. If user clicks the button of the currently displayed frame,
+  nothing happens. If user clicks a name, target is determined. Sends
+  targetIndex to flipPicture function. */
+  var targetIndex;
   var currentIndex = Number($('button.highlight').attr('name'));
   if (buttonName == "prev") {
     if (currentIndex === 0) {
@@ -53,14 +76,7 @@ $(document).on('click', 'nav > button', function() {
   } else {
     targetIndex = Number(buttonName);
   }
-  console.log(targetIndex);
   flipPicture(targetIndex);
-});
-
-var randomIndex = function() {
-  /* Random classmateArray index generator. Used at the beginning, and with the
-  "Random" button (if I have time to implement it).*/
-  return Math.floor(Math.random() * classmateArray.length);
 };
 
 var buildNav = function() {
@@ -87,6 +103,7 @@ var buildFrames = function() {
     frameText += '<h2 class="name">' + classmateArray[i].first_name + ' ' + classmateArray[i].last_name + '</h2>\n';
     frameText += '<img src="' + classmateArray[i].picUrl + '">\n';
     frameText += '<p class="info">' + classmateArray[i].info + '</p>\n';
+    frameText += '<p class="index">' + (i + 1) + '/' + classmateArray.length + '</p>\n';
     frameText += '</div>\n';
     $('main').append(frameText);
   }
