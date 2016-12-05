@@ -5,3 +5,8 @@ main {
 main > div {
   position: absolute;
 }
+
+.btn {
+  display: block;
+  width: 100px;
+}

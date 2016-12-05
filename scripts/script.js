@@ -1,9 +1,11 @@
-/*
+/* Informative, pithy general comments go here when I have time.
 */
 
 var classmateArray = [];
 
 var timerID = -1;
+/* Initial timerID setting, to ensure that no timer gets accidentally
+stopped at the beginning. */
 
 var TIMER_DURATION = 10000;  // in milliseconds
 
@@ -83,7 +85,7 @@ var buildNav = function() {
   // Constructs navigation buttons for side navigation panel.
   $('nav').append('<button name="prev">Prev</button>\n');
   for (var i = 0; i < classmateArray.length; i++) {
-    var el = '<button name="' + i + '">' + classmateArray[i].first_name + '</button>\n';
+    var el = '<button name="' + i + '" class="btn">' + classmateArray[i].first_name + '</button>\n';
     $('nav').append(el);
   }
   $('nav').append('<button name="next">Next</button>\n');
@@ -101,7 +103,7 @@ var buildFrames = function() {
     var frameText = '';
     frameText += '<div id="classmate' + i + '" style="display: none;">\n';
     frameText += '<h2 class="name">' + classmateArray[i].first_name + ' ' + classmateArray[i].last_name + '</h2>\n';
-    frameText += '<img src="' + classmateArray[i].picUrl + '">\n';
+    frameText += '<img src="' + classmateArray[i].picUrl + '" height="300">\n';
     frameText += '<p class="info">' + classmateArray[i].info + '</p>\n';
     frameText += '<p class="index">' + (i + 1) + '/' + classmateArray.length + '</p>\n';
     frameText += '</div>\n';
