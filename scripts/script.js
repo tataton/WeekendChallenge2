@@ -83,14 +83,14 @@ var triggerTarget = function(buttonName) {
 
 var buildNav = function() {
   // Constructs navigation buttons for side navigation panel.
-  $('nav').append('<button name="prev" class="btn btn-primary">Prev</button>\n');
-  $('nav').append('<div class="btn-group-vertical">\n');
+  $('nav').append('<div>\n<button name="prev" class="btn btn-primary">Prev</button>\n</div>\n');
+  $('nav').append('<div>\n');
   for (var i = 0; i < classmateArray.length; i++) {
     var el = '<button name="' + i + '" class="btn btn-default">' + classmateArray[i].first_name + '</button>\n';
     $('nav').append(el);
   }
   $('nav').append('</div>\n');
-  $('nav').append('<button name="next" class="btn btn-primary">Next</button>\n');
+  $('nav').append('<div>\n<button name="next" class="btn btn-primary">Next</button>\n</div>\n');
 };
 
 var buildFrames = function() {
