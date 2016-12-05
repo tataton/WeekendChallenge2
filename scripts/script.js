@@ -60,7 +60,7 @@ var triggerTarget = function(buttonName) {
   nothing happens. If user clicks a name, target is determined. Sends
   targetIndex to flipPicture function. */
   var targetIndex;
-  var currentIndex = Number($('button.highlight').attr('name'));
+  var currentIndex = Number($('button.disabled').attr('name'));
   if (buttonName == "prev") {
     if (currentIndex === 0) {
       targetIndex = (classmateArray.length - 1);
@@ -83,12 +83,12 @@ var triggerTarget = function(buttonName) {
 
 var buildNav = function() {
   // Constructs navigation buttons for side navigation panel.
-  $('nav').append('<button name="prev">Prev</button>\n');
+  $('nav').append('<button name="prev" class="btn btn-primary">Prev</button>\n');
   for (var i = 0; i < classmateArray.length; i++) {
-    var el = '<button name="' + i + '" class="btn">' + classmateArray[i].first_name + '</button>\n';
+    var el = '<button name="' + i + '" class="btn btn-default">' + classmateArray[i].first_name + '</button>\n';
     $('nav').append(el);
   }
-  $('nav').append('<button name="next">Next</button>\n');
+  $('nav').append('<button name="next" class="btn btn-primary">Next</button>\n');
 };
 
 var buildFrames = function() {
@@ -125,6 +125,6 @@ var buttonHighlight = function(index) {
   /* Highlights the button of the currently displayed frame. Also serves
   as a pretty unwieldy memory of the displayed frame, which I use to
   interpret the "Prev" and "Next" buttons. */
-  $('button.highlight').removeClass('highlight');
-  $('button[name="' + index + '"]').addClass('highlight');
+  $('button.disabled').removeClass('btn-info disabled');
+  $('button[name="' + index + '"]').addClass('btn-info disabled');
 };
